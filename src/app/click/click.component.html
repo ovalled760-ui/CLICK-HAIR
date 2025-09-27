@@ -1,0 +1,42 @@
+<div class="click-page">
+  <header>
+    <h1>Click Hair 💇‍♀️✨</h1>
+    <p>Descubre productos increíbles para tu cabello</p>
+  </header>
+
+  <div class="product-grid">
+    <div class="product-card" *ngFor="let producto of productos" (click)="verDetalle(producto)">
+      <img [src]="producto.imagen" alt="{{producto.nombre}}">
+      <h3>{{producto.nombre}}</h3>
+      <p>{{producto.descripcion}}</p>
+
+    <div class="actions">
+  <button (click)="toggleLike(producto, $event); $event.stopPropagation()">❤️ {{producto.likes}}</button>
+  <button (click)="abrirComentarios(producto, $event); $event.stopPropagation()">💬 {{producto.comentarios.length}}</button>
+</div>
+
+
+  <div class="modal" *ngIf="productoDetalle">
+    <div class="modal-content">
+      <span class="close" (click)="cerrarDetalle()">&times;</span>
+      <img [src]="productoDetalle.imagen" alt="{{productoDetalle.nombre}}">
+      <h2>{{productoDetalle.nombre}}</h2>
+      <p>{{productoDetalle.descripcion}}</p>
+      <div class="actions">
+        <button (click)="toggleLike(productoDetalle, $event)">❤️ {{productoDetalle.likes}}</button>
+      </div>
+
+      <div class="comentarios">
+        <h3>Comentarios</h3>
+        <div *ngFor="let c of productoDetalle.comentarios">
+          <p>💬 {{c}}</p>
+        </div>
+
+        <form (ngSubmit)="agregarComentario(productoDetalle, nuevoComentario.value)">
+          <input #nuevoComentario placeholder="Agregar comentario">
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
